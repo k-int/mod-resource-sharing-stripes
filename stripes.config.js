@@ -12,7 +12,6 @@ module.exports = {
     // softLogout: false
   },
   modules: {
-    '@folio/trivial': {},
     '@folio/users': {}
   }
 };
