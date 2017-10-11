@@ -1,0 +1,12 @@
+{
+  "name": "stripes-resource-sharing-app",
+  "version": "0.0.1",
+  "description": "Stripes app module for resource sharing",
+  "main": "src/index.js",
+  "stripes": {
+    "type": "app",
+    "displayName": "Resource sharing",
+    "route":"/resource-sharing"
+  },
+  "license": "Apache-2.0"
+}

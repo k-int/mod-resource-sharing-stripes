@@ -12,6 +12,7 @@ module.exports = {
     // softLogout: false
   },
   modules: {
-    '@folio/users': {}
+    '@folio/users': {},
+    '@folio/../../../../../app-resource-sharing': {}
   }
 };
