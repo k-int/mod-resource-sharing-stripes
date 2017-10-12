@@ -1,8 +1,34 @@
 {
+  "ecmaVersion": 6,
   "plugins": {
     "guess-types": {
       
+    },
+    "webpack": {
+      
+    },
+    "eslint": {
+      "configFile": "/home/sosguthorpe/git/mod-resource-sharing/ui-stripes/.eslintrc.json"
+    },
+    "doc_comment": null,
+    "node": {
+      
     }
   },
-  "ecmaVersion": 6
+  "libs": [
+    "ecma5",
+    "ecma6"
+  ],
+  "ide": {
+    "scriptPaths": [
+      {
+        "type": "FOLDER",
+        "path": "app-resource-sharing/src"
+      },
+      {
+        "type": "FOLDER",
+        "path": "node_modules"
+      }
+    ]
+  }
 }

@@ -5,3 +5,4 @@ webpackcache/
 .*
 !.gitignore
 !.tern-project
+!.eslintrc.json

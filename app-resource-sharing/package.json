@@ -6,7 +6,7 @@
   "stripes": {
     "type": "app",
     "displayName": "Resource sharing",
-    "route":"/resource-sharing"
+    "route":"/resourcesharing"
   },
   "license": "Apache-2.0"
 }

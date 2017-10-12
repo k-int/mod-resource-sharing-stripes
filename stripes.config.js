@@ -1,18 +1,20 @@
 module.exports = {
   okapi: { 'url':'http://localhost:9130', 'tenant':'diku' },
   config: {
-    // autoLogin: { username: 'diku_admin', password: 'admin' }
-    // logCategories: 'core,redux,connect,connect-fetch,substitute,path,mpath,mquery,action,event,perm,interface,xhr'
-    // logPrefix: 'stripes'
-    // logTimestamp: false
-    // showPerms: false
-    // listInvisiblePerms: false
+     autoLogin: { username: 'diku_admin', password: 'admin' },
+//     logCategories: 'core,redux,connect,connect-fetch,substitute,path,mpath,mquery,action,event,perm,interface,xhr',
+//     logPrefix: 'stripes',
+//     logTimestamp: true,
+//     showPerms: true,
+//     listInvisiblePerms: true,
     // disableAuth: false
-    // hasAllPerms: false
+     hasAllPerms: true,
     // softLogout: false
   },
   modules: {
     '@folio/users': {},
-    '@folio/../../../../../app-resource-sharing': {}
+    '../../../../../app-resource-sharing': {
+      module: "app-resource-sharing"
+    }
   }
 };
