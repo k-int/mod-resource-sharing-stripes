@@ -13,8 +13,6 @@ module.exports = {
   },
   modules: {
     '@folio/users': {},
-    '../../../../../app-resource-sharing': {
-      module: "app-resource-sharing"
-    }
+    '@folio/resource-sharing': {}
   }
 };
