@@ -1,7 +1,7 @@
 node_modules
 stripes.config.js.local
 yarn.lock
-webpackcache/
+dist
 .*
 !.gitignore
 !.tern-project
