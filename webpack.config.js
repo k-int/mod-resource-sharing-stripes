@@ -20,16 +20,15 @@ const babelConf = {
   ],
 };
 
-module.exports = {
+module.exports = [{
   entry: './app-resource-sharing/src/index.js',
   output: {
     path: path.resolve(__dirname, 'app-resource-sharing/dist'),
-    filename: 'app-resource-sharing-[hash].js',
-    library: 'app-resource-sharing',
+    filename: 'app-resource-sharing.js',
+    library: 'appResourceSharing',
     libraryTarget: 'umd'
   },
   module: {
-    
     rules: [{
       test: /\.js$/,
       exclude: /node_modules/,
@@ -47,4 +46,30 @@ module.exports = {
       root: 'React'
     }
   }
-};
+//},{
+//  entry: './plugin-schema-forms/src/index.js',
+//  output: {
+//    path: path.resolve(__dirname, 'plugin-schema-forms/dist'),
+//    filename: 'plugin-schema-forms.js',
+//    library: 'pluginSchemaForm',
+//    libraryTarget: 'umd'
+//  },
+//  module: {
+//    rules: [{
+//      test: /\.js$/,
+//      exclude: /node_modules/,
+//      use: {
+//        loader: 'babel-loader',
+//        options: babelConf,
+//      },
+//    }]
+//  },
+//  externals: {
+//    react: {
+//      commonjs: 'react',
+//      commonjs2: 'react',
+//      amd: 'react',
+//      root: 'React'
+//    }
+//  }
+}];

@@ -1,0 +1,11 @@
+{
+  "name": "@folio/plugin-schema-forms",
+  "version": "0.0.1",
+  "description": "Stripes plugin module for producing forms from JSON schemas",
+  "main": "dist/plugin-schema-forms.js",
+  "stripes": {
+    "type": "plugin"
+  },
+  "license": "Apache-2.0",
+  "react-jsonschema-form": "^0.51.0"
+}

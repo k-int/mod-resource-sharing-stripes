@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "http://localhost:8080/config/schema/ResourceSharingRequest",
+  "title": "Resource Sharing Request",
+  "type": "object",
+  "properties": {
+    "pagination": {
+      "type": "string"
+    },
+    "publisher": {
+      "type": "string"
+    },
+    "publicationDate": {
+      "type": "string"
+    },
+    "edition": {
+      "type": "string"
+    },
+    "authorOfArticle": {
+      "type": "string"
+    },
+    "isbn": {
+      "type": "string"
+    },
+    "placeOfPublication": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer"
+    },
+    "author": {
+      "type": "string"
+    },
+    "issn": {
+      "type": "string"
+    },
+    "volume": {
+      "type": "string"
+    },
+    "nationalBibNo": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "additionalNoLetters": {
+      "type": "string"
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "heldMediumType": {
+      "type": "string"
+    },
+    "callNumber": {
+      "type": "string"
+    },
+    "titleOfArticle": {
+      "type": "string"
+    },
+    "publicationDateOfComponent": {
+      "type": "string"
+    },
+    "systemNo": {
+      "type": "string"
+    },
+    "sponsoringBody": {
+      "type": "string"
+    },
+    "itemType": {
+      "type": "string"
+    },
+    "patronId": {
+      "type": "string"
+    },
+    "issue": {
+      "type": "string"
+    },
+    "seriesTitleNumber": {
+      "type": "string"
+    },
+    "verificationReferenceSource": {
+      "type": "string"
+    }
+  }
+}

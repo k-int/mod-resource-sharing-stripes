@@ -4,7 +4,7 @@
     "build": "stripes build stripes.config.js",
     "start": "stripes dev stripes.config.js",
     "local": "f=stripes.config.js; test -f $f.local && f=$f.local; echo Using config $f; stripes dev $f",
-    "postinstall": "cd app-resource-sharing && yarn link && cd ../ && yarn link @folio/resource-sharing"
+    "postinstall": "./postinstall.sh"
   },
   "dependencies": {
     "@folio/checkin": "^1.1.1",
@@ -21,7 +21,8 @@
     "@folio/stripes-core": "^2.7.0",
     "@folio/stripes-logger": "^0.0.2",
     "@folio/trivial": "^1.0.0",
-    "@folio/users": "^2.10.1"
+    "@folio/users": "^2.10.1",
+    "react-jsonschema-form": "^0.51.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",

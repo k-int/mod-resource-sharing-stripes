@@ -13,6 +13,7 @@ module.exports = {
   },
   modules: {
     '@folio/users': {},
-    '@folio/resource-sharing': {}
+    '@folio/resource-sharing': {},
+//    '@folio/plugin-schema-forms': {}
   }
 };

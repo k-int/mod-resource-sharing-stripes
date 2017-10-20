@@ -1,4 +1,5 @@
 
 import React from 'react';
+import ResourceSharing from './ResourceSharing'
 
-export default () => <div>We have a screen! Yes!</div>;
+export default () => <ResourceSharing />;
