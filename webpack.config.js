@@ -1,21 +1,12 @@
 const path = require('path');
 const babelEs2015 = require('babel-preset-es2015');
+const babelStage2 = require('babel-preset-stage-2');
 const babelReact = require('babel-preset-react');
-const babelEnv = require('babel-preset-env');
-
-const browserSupport = [
-  'last 3 version',
-  'ie >= 11',
-];
 
 const babelConf = {
   presets: [
     babelEs2015,
-    [babelEnv, {
-      targets: {
-        browsers: browserSupport,
-      },
-    }],
+    babelStage2,
     babelReact,
   ],
 };
@@ -31,11 +22,39 @@ module.exports = [{
   module: {
     rules: [{
       test: /\.js$/,
-      exclude: /node_modules/,
+      exclude: /node_modules(?!\/\@folio)/,
       use: {
         loader: 'babel-loader',
         options: babelConf,
       },
+    },{
+      test: /\.css$/,
+      use: [
+        {
+          loader: 'style-loader'
+        },
+        {
+          loader: 'css-loader?modules&localIdentName=[local]---[hash:base64:5]'
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: function () {
+              return [
+                require('postcss-import'),
+                require('postcss-url'),
+                require("autoprefixer"),
+                require("postcss-custom-properties"),
+                require("postcss-calc"),
+                require("postcss-nesting"),
+                require("postcss-custom-media"),
+                require("postcss-media-minmax"),
+                require("postcss-color-function")
+              ];
+            }
+          }
+        }
+      ]
     }]
   },
   externals: {

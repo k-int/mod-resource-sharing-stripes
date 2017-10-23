@@ -1,5 +1,2 @@
-
-import React from 'react';
-import ResourceSharing from './ResourceSharing'
-
-export default () => <ResourceSharing />;
+import ResourceSharingRouting from './ResourceSharingRouting'
+export default ResourceSharingRouting;
