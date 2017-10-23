@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SchemaForm from './SchemaForm';
+import SchemaForm from './schema-form/SchemaForm';
 
 class ResourceSharing extends Component {
   
