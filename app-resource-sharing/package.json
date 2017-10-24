@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Stripes app module for resource sharing",
   "main": "dist/app-resource-sharing.js",
+  "module": "src/index.js",
   "stripes": {
     "type": "app",
     "displayName": "Resource sharing",

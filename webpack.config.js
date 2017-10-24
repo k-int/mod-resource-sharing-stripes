@@ -63,6 +63,12 @@ module.exports = [{
       commonjs2: 'react',
       amd: 'react',
       root: 'React'
+    },
+    lodash : {
+      commonjs: "lodash",
+      commonjs2: 'lodash',
+      amd: "lodash",
+      root: "_"
     }
   }
 //},{

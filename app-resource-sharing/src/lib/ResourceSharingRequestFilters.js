@@ -34,14 +34,6 @@ class ResourceSharingRequestFilters extends Component {
       filters: {}
     };
     
-    if (!this.props.header) {
-      this.header = <div>
-        <Button className={filterPaneCss.headerSearchClearButton} ><Icon icon="clearX" iconClassName={filterPaneCss.clearIcon}/></Button>
-      </div>;
-    } else {
-      this.header = props.header;
-    }
-    
     this.filterChange = filterChange.bind(this);
     this.transitionToParams = transitionToParams.bind(this);
   }
@@ -53,10 +45,10 @@ class ResourceSharingRequestFilters extends Component {
   render () {
     const props = this.props;
     return (
-      <Pane {...props} header={this.header} >
+      <Pane {...props}>
         <FilterGroups config={ResourceSharingRequestFilters.filterConfig} filters={this.state.filters} onChangeFilter={this.filterChange} />
       </Pane>
-    );
+    )
   }
 }
 

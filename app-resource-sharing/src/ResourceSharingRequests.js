@@ -89,20 +89,22 @@ class ResourceSharingRequests extends Component {
     this.setState({ sortOrder, sortDirection, cqlSort });
     this.transitionToParams({ sortOrder, sortDirection });
   }
+  
+  onClickCreate = (e) => {
+    if (e) e.preventDefault();
+    this.log('action', 'clicked "Create request"');
+    this.transitionToParams({ layer: 'create' });
+  }
+
+  onClickCloseCreate = (e) => {
+    if (e) e.preventDefault();
+    this.log('action', 'clicked "Close Create request"');
+    removeQueryParam('layer', this.props.location, this.props.history);
+  }
 
   render () {
     
     const items = this.props.data.requests || [];
-    console.log(this.props);
-    
-    const namedItem = (keyName) => {
-      return (item) => <td key={keyName} >{item[keyName].title}</td>
-    }
-    
-    // Formatter of all objects that just print a title.
-    const resultsFormatter = {
-      status: namedItem('id')
-    };
     
     const searchHeader = <FilterPaneSearch id="search"
       onChange={this.searchChange} onClear={this.searchClear} value={this.state.searchTerm} />;
@@ -110,18 +112,17 @@ class ResourceSharingRequests extends Component {
     return (
       <Paneset>
         {/* Filters */}
-        <Filters defaultWidth="16%" location={this.props.location} history={this.props.history} />
+        <Filters 
+          header={searchHeader} defaultWidth="16%" location={this.props.location} history={this.props.history} />
         
         {/* Results Pane */}
         <Pane
-          
-          header={searchHeader}
-          defaultWidth="50%"
+          defaultWidth="84%"
           paneTitle={
             <div style={{ textAlign: 'center' }}>
-              <strong>Results</strong>
+              <strong>Resource Sharing Requests</strong>
               <div>
-                <em>{items.length} Results Found</em>
+                <em>{items.length} Result{items.length == 1 ? '' : 's'} Found</em>
               </div>
             </div>
           }
@@ -129,9 +130,8 @@ class ResourceSharingRequests extends Component {
           <MultiColumnList
             contentData={items}
             rowMetadata={['id']}
-            visibleColumns={['title']}
+            visibleColumns={['title', 'subTitle', 'titleOfArticle', 'itemType']}
             fullWidth
-            formatter={resultsFormatter}
             selectedRow={this.state.selectedItem}
             onHeaderClick={this.sort}
             onRowClick={this.selectRow}
