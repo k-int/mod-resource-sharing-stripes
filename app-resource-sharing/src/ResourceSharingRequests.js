@@ -1,16 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import Checkbox from '@folio/stripes-components/lib/Checkbox';
-import TextField from '@folio/stripes-components/lib/TextField';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import makePathFunction from '@folio/stripes-components/util/makePathFunction';
 import Filters from './lib/ResourceSharingRequestFilters';
 import FilterPaneSearch from '@folio/stripes-components/lib/FilterPaneSearch';
+import Button from '@folio/stripes-components/lib/Button';
 import queryString from 'query-string';
 import { debounce } from 'lodash';
+import CreateForm from './ResourceSharingRequestForm';
+import Layer from '@folio/stripes-components/lib/Layer';
+import removeQueryParam from '@folio/users/removeQueryParam';
 
 class ResourceSharingRequests extends Component {
   
@@ -92,19 +93,20 @@ class ResourceSharingRequests extends Component {
   
   onClickCreate = (e) => {
     if (e) e.preventDefault();
-    this.log('action', 'clicked "Create request"');
+    this.props.stripes.logger.log('action', 'clicked "Create request"');
     this.transitionToParams({ layer: 'create' });
   }
 
   onClickCloseCreate = (e) => {
     if (e) e.preventDefault();
-    this.log('action', 'clicked "Close Create request"');
+    this.props.stripes.logger.log('action', 'clicked "Close Create request"');
     removeQueryParam('layer', this.props.location, this.props.history);
   }
 
   render () {
     
     const items = this.props.data.requests || [];
+    const query = location.search ? queryString.parse(location.search) : {};
     
     const searchHeader = <FilterPaneSearch id="search"
       onChange={this.searchChange} onClear={this.searchClear} value={this.state.searchTerm} />;
@@ -126,6 +128,7 @@ class ResourceSharingRequests extends Component {
               </div>
             </div>
           }
+          lastMenu={<Button id="clickable-create" title="Create resource sharing request" onClick={this.onClickCreate} buttonStyle="primary paneHeaderNewButton">Create</Button>}
         >
           <MultiColumnList
             contentData={items}
@@ -137,6 +140,13 @@ class ResourceSharingRequests extends Component {
             onRowClick={this.selectRow}
           />
         </Pane>
+        <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Create Resource Sharing Request">
+          <CreateForm
+            id="userform-adduser"
+            okapi={this.okapi}
+            onCancel={this.onClickCloseCreate}
+          />
+        </Layer>
       </Paneset>
     );
   }
