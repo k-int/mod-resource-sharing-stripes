@@ -58,17 +58,32 @@ module.exports = [{
     }]
   },
   externals: {
-    react: {
+    'react': {
       commonjs: 'react',
       commonjs2: 'react',
       amd: 'react',
       root: 'React'
     },
-    lodash : {
+    'lodash': {
       commonjs: "lodash",
       commonjs2: 'lodash',
       amd: "lodash",
       root: "_"
+    },
+    'query-string': {
+      commonjs: "query-string",
+      commonjs2: 'query-string',
+      amd: "query-string"
+    },
+    'react-router-dom': {
+      commonjs: "react-router-dom",
+      commonjs2: 'react-router-dom',
+      amd: "react-router-dom"
+    },
+    'prop-types': {
+      commonjs: "prop-types",
+      commonjs2: 'prop-types',
+      amd: "prop-types"
     }
   }
 //},{

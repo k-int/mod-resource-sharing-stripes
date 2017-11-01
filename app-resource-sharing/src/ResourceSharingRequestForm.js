@@ -6,7 +6,7 @@ class ResourceSharingRequestForm extends Component {
   render () {
     
     return (
-      <SchemaForm onCancel={this.props.onCancel} />
+      <SchemaForm {...this.props} />
     );
   }
 }

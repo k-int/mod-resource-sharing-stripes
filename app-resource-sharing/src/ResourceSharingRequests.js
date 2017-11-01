@@ -4,7 +4,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import makePathFunction from '@folio/stripes-components/util/makePathFunction';
-import Filters from './lib/ResourceSharingRequestFilters';
+import ResourceSharingRequestFilters from './lib/ResourceSharingRequestFilters';
 import FilterPaneSearch from '@folio/stripes-components/lib/FilterPaneSearch';
 import Button from '@folio/stripes-components/lib/Button';
 import queryString from 'query-string';
@@ -102,6 +102,13 @@ class ResourceSharingRequests extends Component {
     this.props.stripes.logger.log('action', 'clicked "Close Create request"');
     removeQueryParam('layer', this.props.location, this.props.history);
   }
+  
+  saveRecord = ({formData}) => {
+    console.log(formData);
+    this.props.mutator.requests.POST(formData).then(()=>{
+      this.onClickCloseCreate();
+    });
+  };
 
   render () {
     
@@ -114,7 +121,7 @@ class ResourceSharingRequests extends Component {
     return (
       <Paneset>
         {/* Filters */}
-        <Filters 
+        <ResourceSharingRequestFilters 
           header={searchHeader} defaultWidth="16%" location={this.props.location} history={this.props.history} />
         
         {/* Results Pane */}
@@ -142,9 +149,11 @@ class ResourceSharingRequests extends Component {
         </Pane>
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Create Resource Sharing Request">
           <CreateForm
-            id="userform-adduser"
+            id="form-create"
             okapi={this.okapi}
             onCancel={this.onClickCloseCreate}
+            onSubmit={this.saveRecord}
+            defaultWidth="65%"
           />
         </Layer>
       </Paneset>

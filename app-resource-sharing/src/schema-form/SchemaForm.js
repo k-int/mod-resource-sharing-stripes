@@ -8,10 +8,6 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 
 class SchemaForm extends Component {
   
-  onSubmit = ({formData}) => {
-    console.log(formData);
-  };
-  
   
   render () {
     return (
@@ -23,8 +19,9 @@ class SchemaForm extends Component {
           <RJSForm 
             id={this.props.id}
             schema={schema}
+            width={this.props.defaultWidth ? this.props.defaultWidth : '100%'}
             liveValidate={true}
-            onSubmit={this.onSubmit}/>
+            onSubmit={this.props.onSubmit}/>
         </Pane>
       </Paneset>
     )

@@ -17,12 +17,12 @@ class ResourceSharingRequestFilters extends Component {
   
   static filterConfig = [
     {
-      label: 'Status',
-      name: 'active',
-      cql: 'active',
+      label: 'Item Type',
+      name: 'itemType',
+      cql: 'itemType',
       values: [
-        { name: 'Active', cql: 'true' },
-        { name: 'Inactive', cql: 'false' },
+        { name: 'Serial', cql: 'serial' },
+        { name: 'Book', cql: 'book' },
       ],
     }
   ];
