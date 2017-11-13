@@ -22,9 +22,11 @@
     "@folio/stripes-logger": "^0.0.2",
     "@folio/trivial": "^1.0.0",
     "@folio/users": "^2.10.1",
-    "react-jsonschema-form": "^0.51.0"
+    "react-jsonschema-form": "^0.51.0",
+    "react-string-replace": "^0.4.1"
   },
   "devDependencies": {
+    "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "webpack": "^3.8.1",
     "webpack-dashboard": "^1.0.0",

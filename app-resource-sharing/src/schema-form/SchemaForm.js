@@ -20,7 +20,8 @@ class SchemaForm extends Component {
             id={this.props.id}
             schema={schema}
             width={this.props.defaultWidth ? this.props.defaultWidth : '100%'}
-            liveValidate={true}
+//            liveValidate={true}
+            showErrorList={false}
             onSubmit={this.props.onSubmit}/>
         </Pane>
       </Paneset>

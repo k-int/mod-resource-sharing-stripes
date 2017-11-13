@@ -4,7 +4,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import makePathFunction from '@folio/stripes-components/util/makePathFunction';
-import ResourceSharingRequestFilters from './lib/ResourceSharingRequestFilters';
+import SearchFilters from './lib/SearchFilters';
 import FilterPaneSearch from '@folio/stripes-components/lib/FilterPaneSearch';
 import Button from '@folio/stripes-components/lib/Button';
 import queryString from 'query-string';
@@ -12,13 +12,56 @@ import { debounce } from 'lodash';
 import CreateForm from './ResourceSharingRequestForm';
 import Layer from '@folio/stripes-components/lib/Layer';
 import removeQueryParam from '@folio/users/removeQueryParam';
+import stringReplace from 'react-string-replace';
 
 class ResourceSharingRequests extends Component {
+  
+  static visibleFields = ['title', 'subTitle', 'titleOfArticle', 'itemType'];
   
   static manifest = Object.freeze({
     requests: {
       type: 'okapi',
-      path: 'request',
+      path: (queryParams, pathComponents, resourceData) => {
+        let pars = {
+          match: [],
+          term: queryParams.query
+        }; 
+        for (let field of ResourceSharingRequests.visibleFields) {
+          pars.match.push(`${field}`);
+        }
+        
+        if (queryParams && "filters" in queryParams && queryParams.filters) {
+          let filters = queryParams.filters.split(',');
+          
+          // Each filter in the form 'propertyName.value'
+          let joinedFilters = {};
+          for (let filter of filters) {
+            let tuple = filter.split('.');
+            let disjunc = joinedFilters[tuple[0]];
+            
+            // =i= is our case insensitive equals. Only matters if we are dealing with text.
+            if (!disjunc) {
+              disjunc = `${tuple[0]}=i=${tuple[1]}`;
+            } else {
+              disjunc += `|| ${tuple[0]}=i=${tuple[1]}`;
+            }
+            
+            joinedFilters[tuple[0]] = disjunc;
+          }
+          
+          // We now need to combine the filter types conjuctively.
+          pars.filters = [];
+          for (const filterProp of Object.keys(joinedFilters)) {
+            pars.filters.push(joinedFilters[filterProp]);
+          }
+        }
+        let qPars = queryString.stringify( pars );
+        
+        console.log(qPars);
+        
+        let reqStr = `requests?${ qPars }`;
+        return reqStr;
+      },
       clientGeneratePk: false
     }
   });
@@ -36,8 +79,7 @@ class ResourceSharingRequests extends Component {
   };
   
   constructor(props) {
-    super(props);
-    this.initState (props);
+    super(props);  
     
     // Rebinding of methods, to ensure correct scope.
     this.selectRow = this.selectRow.bind(this);
@@ -46,6 +88,8 @@ class ResourceSharingRequests extends Component {
     this.searchDo = debounce(this.searchDo, 450).bind(this);
     this.sort = this.sort.bind(this);
     this.transitionToParams = transitionToParams.bind(this);
+    
+    this.initState (props);  
   }
   
   initState (props) {
@@ -53,8 +97,26 @@ class ResourceSharingRequests extends Component {
     this.state = {
       selectedItem: {},
       searchTerm: query.query || '',
-      filters: {}
+      filters: {},
+      searchHighlighterFormatter: {} 
     };
+    
+    for (let field of ResourceSharingRequests.visibleFields) {
+      this.state.searchHighlighterFormatter[`${field}`] = ((data) => {
+        
+        if (!this.state.searchTerm || this.state.searchTerm == '') return <span>{data[`${field}`]}</span>;
+        
+        let escSearchText = this.state.searchTerm.replace(/([.*+?^${}()|[\]\\])/g, '\\$1');
+        let text = data[`${field}`];
+        
+        text = stringReplace(text, new RegExp(`(${escSearchText})`, 'gi'), (match, i) => (
+          <strong key={i} style={{'border-bottom': '1px dotted', 'font-size': '1.15rem'}}>{match}</strong>
+        ));
+        
+        return <span>{text}</span>;
+      }).bind(this)
+    }
+    
     if (query.sortOrder) this.state['sortOrder'] = query.sortOrder;
     if (query.sortDirection) this.state['sortDirection'] = query.sortDirection;
     if (query.sortOrder && query.sortDirection) this.state['cqlSort'] = query.sortOrder + ' ' + query.sortDirection;
@@ -109,20 +171,30 @@ class ResourceSharingRequests extends Component {
       this.onClickCloseCreate();
     });
   };
+  
+  static filterConfig = [
+    {
+      label: 'Item Type',
+      name: 'itemType',
+      values: [
+        { label: 'Serial',  name: 'serial' },
+        { label: 'Book',    name: 'book' }
+      ],
+    }
+  ];
 
   render () {
     
     const items = this.props.data.requests || [];
     const query = location.search ? queryString.parse(location.search) : {};
-    
     const searchHeader = <FilterPaneSearch id="search"
       onChange={this.searchChange} onClear={this.searchClear} value={this.state.searchTerm} />;
     
     return (
       <Paneset>
         {/* Filters */}
-        <ResourceSharingRequestFilters 
-          header={searchHeader} defaultWidth="16%" location={this.props.location} history={this.props.history} />
+        <SearchFilters 
+          header={searchHeader} defaultWidth="16%" id="pane-filter" filterConfig={ResourceSharingRequests.filterConfig} location={this.props.location} history={this.props.history} />
         
         {/* Results Pane */}
         <Pane
@@ -136,13 +208,13 @@ class ResourceSharingRequests extends Component {
             </div>
           }
           lastMenu={<Button id="clickable-create" title="Create resource sharing request" onClick={this.onClickCreate} buttonStyle="primary paneHeaderNewButton">Create</Button>}
-        >
-          <MultiColumnList
+        ><MultiColumnList
             contentData={items}
             rowMetadata={['id']}
-            visibleColumns={['title', 'subTitle', 'titleOfArticle', 'itemType']}
+            visibleColumns={ResourceSharingRequests.visibleFields}
             fullWidth
             selectedRow={this.state.selectedItem}
+            formatter={this.state.searchHighlighterFormatter}
             onHeaderClick={this.sort}
             onRowClick={this.selectRow}
           />
