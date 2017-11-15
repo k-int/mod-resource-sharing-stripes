@@ -3,7 +3,7 @@
   "id": "http://localhost:8080/config/schema/embedded/ResourceSharingRequest",
   "title": "Resource Sharing Request",
   "type": "object",
-  "required":["title","subTitle","titleOfArticle","itemType","patronId"],
+  "required":["title","subTitle","titleOfArticle","itemType"],
   "properties": {
     "title": {
       "type": "string"
@@ -15,9 +15,6 @@
       "type": "string"
     },
     "itemType": {
-      "type": "string"
-    },
-    "patronId": {
       "type": "string"
     },
     "pagination": {

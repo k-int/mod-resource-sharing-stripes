@@ -8,8 +8,11 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 
 class SchemaForm extends Component {
   
-  
   render () {
+
+    console.log ("Form data:");
+    console.log (this.props);
+    
     return (
       <Paneset>
         <Pane

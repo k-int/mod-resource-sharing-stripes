@@ -62,6 +62,15 @@ class ResourceSharingRequests extends Component {
         let reqStr = `requests?${ qPars }`;
         return reqStr;
       },
+      POST: {
+        path: 'requests'
+      },
+      PUT: {
+        path: 'requests/${id}', // eslint-disable-line no-template-curly-in-string
+      },
+      DELETE: {
+        path: 'requests/${id}', // eslint-disable-line no-template-curly-in-string
+      },
       clientGeneratePk: false
     }
   });
@@ -71,6 +80,7 @@ class ResourceSharingRequests extends Component {
       logger: PropTypes.shape({
         log: PropTypes.func.isRequired,
       }).isRequired,
+      user: PropTypes.shape.isRequired
     }).isRequired,
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
@@ -116,6 +126,10 @@ class ResourceSharingRequests extends Component {
         return <span>{text}</span>;
       }).bind(this)
     }
+
+    const { stripes, location: { pathname } } = this.props;
+    const currentUser = stripes.user ? stripes.user.user : undefined;
+    const currentPerms = stripes.user ? stripes.user.perms : undefined;
     
     if (query.sortOrder) this.state['sortOrder'] = query.sortOrder;
     if (query.sortDirection) this.state['sortDirection'] = query.sortDirection;
