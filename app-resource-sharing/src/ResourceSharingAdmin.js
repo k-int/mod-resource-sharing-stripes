@@ -14,7 +14,7 @@ import Layer from '@folio/stripes-components/lib/Layer';
 import removeQueryParam from '@folio/users/removeQueryParam';
 import stringReplace from 'react-string-replace';
 
-class ResourceSharingRequests extends Component {
+class ResourceSharingAdmin extends Component {
   
   static visibleFields = ['title', 'subTitle', 'titleOfArticle', 'itemType'];
   
@@ -26,7 +26,7 @@ class ResourceSharingRequests extends Component {
           match: [],
           term: queryParams.query
         }; 
-        for (let field of ResourceSharingRequests.visibleFields) {
+        for (let field of ResourceSharingAdmin.visibleFields) {
           pars.match.push(`${field}`);
         }
         
@@ -111,7 +111,7 @@ class ResourceSharingRequests extends Component {
       searchHighlighterFormatter: {} 
     };
     
-    for (let field of ResourceSharingRequests.visibleFields) {
+    for (let field of ResourceSharingAdmin.visibleFields) {
       this.state.searchHighlighterFormatter[`${field}`] = ((data) => {
         
         if (!this.state.searchTerm || this.state.searchTerm == '') return <span>{data[`${field}`]}</span>;
@@ -201,31 +201,31 @@ class ResourceSharingRequests extends Component {
     
     const items = this.props.data.requests || [];
     const query = location.search ? queryString.parse(location.search) : {};
-    const searchHeader = <FilterPaneSearch id="rs-search"
+    const searchHeader = <FilterPaneSearch id="rs-admin-search"
       onChange={this.searchChange} onClear={this.searchClear} value={this.state.searchTerm} />;
     
     return (
       <Paneset>
         {/* Filters */}
         <SearchFilters 
-          header={searchHeader} defaultWidth="16%" id="rs-pane-filter" filterConfig={ResourceSharingRequests.filterConfig} location={this.props.location} history={this.props.history} />
+          header={searchHeader} defaultWidth="16%" id="rs-admin-pane-filter" filterConfig={ResourceSharingAdmin.filterConfig} location={this.props.location} history={this.props.history} />
         
         {/* Results Pane */}
         <Pane
           defaultWidth="84%"
           paneTitle={
             <div style={{ textAlign: 'center' }}>
-              <strong>Resource Sharing Requests</strong>
+              <strong>Administer Resource Sharing Requests</strong>
               <div>
                 <em>{items.length} Result{items.length == 1 ? '' : 's'} Found</em>
               </div>
             </div>
           }
-          lastMenu={<Button id="clickable-rs-create" title="Create resource sharing request" onClick={this.onClickCreate} buttonStyle="primary paneHeaderNewButton">Create</Button>}
+          lastMenu={<Button id="clickable-rs-admin-create" title="Administer resource sharing request" onClick={this.onClickCreate} buttonStyle="primary paneHeaderNewButton">Admin</Button>}
         ><MultiColumnList
             contentData={items}
             rowMetadata={['id']}
-            visibleColumns={ResourceSharingRequests.visibleFields}
+            visibleColumns={ResourceSharingAdmin.visibleFields}
             fullWidth
             selectedRow={this.state.selectedItem}
             formatter={this.state.searchHighlighterFormatter}
@@ -235,7 +235,7 @@ class ResourceSharingRequests extends Component {
         </Pane>
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Create Resource Sharing Request">
           <CreateForm
-            id="rs-form-create"
+            id="rs-admin-form-create"
             okapi={this.okapi}
             onCancel={this.onClickCloseCreate}
             onSubmit={this.saveRecord}
@@ -247,4 +247,4 @@ class ResourceSharingRequests extends Component {
   }
 }
 
-export default ResourceSharingRequests;
+export default ResourceSharingAdmin;

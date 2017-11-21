@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import ResourceSharingRequests from './ResourceSharingRequests';
+import ResourceSharingAdmin from './ResourceSharingAdmin';
 
 class ResourceSharingRouting extends React.Component {
 
@@ -16,7 +17,12 @@ class ResourceSharingRouting extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connectedApp = props.stripes.connect(ResourceSharingRequests);
+//    updateApp();
+  }
+  
+  updateApp() {
+    this.connectedApp = this.props.stripes.hasPerm('resource-sharing.admin') ?
+        this.props.stripes.connect(ResourceSharingAdmin) : this.props.stripes.connect(ResourceSharingRequests);
   }
 
   NoMatch() {
@@ -30,6 +36,7 @@ class ResourceSharingRouting extends React.Component {
 
   render() {
 
+    this.updateApp();
     return (
       <Switch>
         <Route
