@@ -4,7 +4,8 @@
     "build": "stripes build stripes.config.js",
     "start": "stripes dev stripes.config.js",
     "local": "f=stripes.config.js; test -f $f.local && f=$f.local; echo Using config $f; stripes dev $f",
-    "postinstall": "./postinstall.sh"
+    "postinstall": "./postinstall.sh",
+    "buildmd": "node node_modules/@folio/stripes-core/util/package2md.js --strict app-resource-sharing/package.json > okapi-md.json"
   },
   "dependencies": {
     "@folio/checkin": "^1.1.1",
