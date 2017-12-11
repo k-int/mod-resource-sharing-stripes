@@ -13,10 +13,14 @@ import CreateForm from './ResourceSharingRequestForm';
 import Layer from '@folio/stripes-components/lib/Layer';
 import removeQueryParam from '@folio/users/removeQueryParam';
 import stringReplace from 'react-string-replace';
+import ResourceSharingRequest from './ResourceSharingRequest';
+import Route from 'react-router-dom/Route';
+import { get } from 'lodash';
 
 class ResourceSharingRequests extends Component {
   
-  static visibleFields = ['title', 'subTitle', 'titleOfArticle', 'itemType'];
+  static visibleTextFields = ['title', 'subTitle', 'titleOfArticle', 'itemType'];
+  static visibleFields = [].concat(ResourceSharingRequests.visibleTextFields, ['status']);
   
   static manifest = Object.freeze({
     requests: {
@@ -26,7 +30,7 @@ class ResourceSharingRequests extends Component {
           match: [],
           term: queryParams.query
         }; 
-        for (let field of ResourceSharingRequests.visibleFields) {
+        for (let field of ResourceSharingRequests.visibleTextFields) {
           pars.match.push(`${field}`);
         }
         
@@ -89,7 +93,9 @@ class ResourceSharingRequests extends Component {
   };
   
   constructor(props) {
-    super(props);  
+    super(props);
+
+    this.connectedResourceSharingRequest = props.stripes.connect(ResourceSharingRequest);
     
     // Rebinding of methods, to ensure correct scope.
     this.selectRow = this.selectRow.bind(this);
@@ -108,11 +114,21 @@ class ResourceSharingRequests extends Component {
       selectedItem: {},
       searchTerm: query.query || '',
       filters: {},
-      searchHighlighterFormatter: {} 
+      formatters: {
+        status: (data) => (get(data, 'currentServiceRequest.currentState.code', 'IDOL'))
+      } 
     };
     
-    for (let field of ResourceSharingRequests.visibleFields) {
-      this.state.searchHighlighterFormatter[`${field}`] = ((data) => {
+    
+    let match;
+    if ((match = /^(\/+[^\/]+)\/+([^\/]+)$/.exec(props.location.pathname)) !== null) {
+      const id = match[2];
+      this.state.selectedItem = { id };
+    }
+    
+    // The visible fields need a search highlighter adding.
+    for (let field of ResourceSharingRequests.visibleTextFields) {
+      this.state.formatters[`${field}`] = ((data) => {
         
         if (!this.state.searchTerm || this.state.searchTerm == '') return <span>{data[`${field}`]}</span>;
         
@@ -126,7 +142,7 @@ class ResourceSharingRequests extends Component {
         return <span>{text}</span>;
       }).bind(this)
     }
-
+    
     const { stripes, location: { pathname } } = this.props;
     const currentUser = stripes.user ? stripes.user.user : undefined;
     const currentPerms = stripes.user ? stripes.user.perms : undefined;
@@ -138,6 +154,7 @@ class ResourceSharingRequests extends Component {
 
   selectRow (e, meta) {
     this.setState({ selectedItem: meta });
+    this.props.history.push(`/resourcesharing/${meta.id}${this.props.location.search}`);
   }
   
   searchChange (e) {
@@ -197,12 +214,23 @@ class ResourceSharingRequests extends Component {
     }
   ];
 
+  collapseDetails = () => {
+    this.setState({
+      selectedItem: {},
+    });
+    this.props.history.push(`${this.props.match.path}${this.props.location.search}`);
+  }
+
   render () {
     
     const items = this.props.data.requests || [];
     const query = location.search ? queryString.parse(location.search) : {};
     const searchHeader = <FilterPaneSearch id="rs-search"
       onChange={this.searchChange} onClear={this.searchClear} value={this.state.searchTerm} />;
+    
+    const detailsPane =
+      <Route path={'/resourcesharing/:id'}
+        render={props => <this.connectedResourceSharingRequest stripes={this.props.stripes} okapi={this.props.okapi} paneWidth="44%" onClose={this.collapseDetails} {...props} />} />
     
     return (
       <Paneset>
@@ -212,27 +240,28 @@ class ResourceSharingRequests extends Component {
         
         {/* Results Pane */}
         <Pane
-          defaultWidth="84%"
+          defaultWidth="fill"
           paneTitle={
             <div style={{ textAlign: 'center' }}>
-              <strong>Resource Sharing Requests</strong>
+              <strong>Administer Resource Sharing Requests</strong>
               <div>
                 <em>{items.length} Result{items.length == 1 ? '' : 's'} Found</em>
               </div>
             </div>
           }
-          lastMenu={<Button id="clickable-rs-create" title="Create resource sharing request" onClick={this.onClickCreate} buttonStyle="primary paneHeaderNewButton">Create</Button>}
+          lastMenu={<Button id="clickable-rs-create" title="Create a new resource sharing request" onClick={this.onClickCreate} buttonStyle="primary paneHeaderNewButton">Create</Button>}
         ><MultiColumnList
             contentData={items}
             rowMetadata={['id']}
             visibleColumns={ResourceSharingRequests.visibleFields}
             fullWidth
             selectedRow={this.state.selectedItem}
-            formatter={this.state.searchHighlighterFormatter}
+            formatter={this.state.formatters}
             onHeaderClick={this.sort}
             onRowClick={this.selectRow}
           />
         </Pane>
+        { detailsPane }
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Create Resource Sharing Request">
           <CreateForm
             id="rs-form-create"

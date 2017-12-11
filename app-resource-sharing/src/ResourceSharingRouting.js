@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import ResourceSharingRequests from './ResourceSharingRequests';
-import ResourceSharingAdmin from './ResourceSharingAdmin';
+import ResourceSharingRequest from './ResourceSharingRequest';
+import 'rxjs/add/operator/delay';
 
-class ResourceSharingRouting extends React.Component {
+class ResourceSharingRouting extends Component {
 
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
+      epics: PropTypes.object.isRequired,
     }).isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
@@ -17,12 +19,14 @@ class ResourceSharingRouting extends React.Component {
 
   constructor(props) {
     super(props);
-//    updateApp();
+    
+    // Add the epic.
+    // Add epic for component.
+    props.stripes.epics.add(ResourceSharingRequest.refreshEpic)
   }
   
   updateApp() {
-    this.connectedApp = this.props.stripes.hasPerm('resource-sharing.admin') ?
-        this.props.stripes.connect(ResourceSharingAdmin) : this.props.stripes.connect(ResourceSharingRequests);
+    this.connectedApp = this.props.stripes.connect(ResourceSharingRequests);
   }
 
   NoMatch() {
