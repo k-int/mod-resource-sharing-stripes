@@ -22,7 +22,7 @@ class ResourceSharingRouting extends Component {
     
     // Add the epic.
     // Add epic for component.
-    props.stripes.epics.add(ResourceSharingRequest.refreshEpic)
+    props.stripes.epics.add(ResourceSharingRequest.rssRequestEpics)
   }
   
   updateApp() {

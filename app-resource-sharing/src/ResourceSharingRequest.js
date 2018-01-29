@@ -49,18 +49,22 @@ class ResourceSharingRequest extends React.Component {
   }
   
   // Epic to auto refresh this widget and update from the server.
-  static refreshEpic = function(action$) {
+  static rssRequestEpics = function(action$) {
     return action$
       .ofType('REFRESH_SUCCESS')
-      .filter(action => {
-        let status = action.meta && action.meta.target && typeof action.meta.target.getRotaStatus === 'function' && action.meta.target.getRotaStatus();
-        return status !== 'SHIPPED' && status !== 'NOT SUPPLIED';
-      })
+      .filter((action) => (action.meta && action.meta.target && typeof action.meta.target.getRotaStatus === 'function'))
       .debounceTime(100)
       .delay(1000) // Wait 1 second before firing.
       .map(action => {
-        // We should ask the widget to refresh again.
-        return { ...action, type: 'REFRESH' };
+        
+        let status = action.meta.target.getRotaStatus();
+        if (status && status !== 'SHIPPED' && status !== 'NOT SUPPLIED') {
+          // We should ask the widget to refresh again.
+          return { ...action, type: 'REFRESH' };
+        } else {
+          let req = action.meta.target.getRequest();
+          return { type: 'ROTA_FINISHED', reqId: req.id};
+        }
       })
     ;
   }
