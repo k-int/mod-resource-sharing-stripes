@@ -1,6 +1,5 @@
 node_modules
 stripes.config.js.local
-yarn.lock
 */dist
 .*
 !.gitignore
