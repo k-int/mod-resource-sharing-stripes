@@ -53,8 +53,8 @@ class ResourceSharingRequest extends React.Component {
     return action$
       .ofType('REFRESH_SUCCESS')
       .filter((action) => (action.meta && action.meta.target && typeof action.meta.target.getRotaStatus === 'function'))
-      .debounceTime(100)
-      .delay(1000) // Wait 1 second before firing.
+      .debounceTime(1000)
+//      .delay(1000) // Wait 1 second before firing.
       .map(action => {
         
         let status = action.meta.target.getRotaStatus();

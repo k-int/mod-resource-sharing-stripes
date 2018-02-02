@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'; // eslint-disable-line
 import Pane from '@folio/stripes-components/lib/Pane'; // eslint-disable-line
 import transitionToParams from '@folio/stripes-components/util/transitionToParams'; // eslint-disable-line
-import {AccordionSet, Accordion, FilterAccordionHeader} from '@folio/users/node_modules/@folio/stripes-components/lib/Accordion'; // eslint-disable-line
+import {AccordionSet, Accordion, FilterAccordionHeader} from '@folio/stripes-components/lib/Accordion'; // eslint-disable-line
 import FilterControlGroup from '@folio/stripes-components/lib/FilterControlGroup'; // eslint-disable-line
 import { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 import Checkbox from '@folio/stripes-components/lib/Checkbox'; // eslint-disable-line

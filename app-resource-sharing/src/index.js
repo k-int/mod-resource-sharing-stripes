@@ -1,4 +1,3 @@
-import ResourceSharingRouting from './ResourceSharingRouting'
-
+import ResourceSharingRouting from './ResourceSharingRouting';
 
 export default ResourceSharingRouting;

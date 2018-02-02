@@ -1,24 +1,40 @@
 const path = require('path');
-const babelEs2015 = require('babel-preset-es2015');
-const babelStage2 = require('babel-preset-stage-2');
-const babelReact = require('babel-preset-react');
 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
+
+/** /
+
+// Use the below once we can upgrade core to 2.9.0
+const { options: babelConf }= require('stripes-core/webpack/babel-loader-rule.js');
+
+/*/
 const babelConf = {
   presets: [
-    babelEs2015,
-    babelStage2,
-    babelReact,
+    [require.resolve('babel-preset-env'), { modules: false }],
+    [require.resolve('babel-preset-stage-2')],
+    [require.resolve('babel-preset-react')],
   ],
 };
+/**/
 
 module.exports = [{
   entry: './app-resource-sharing/src/index.js',
   output: {
-    path: path.resolve(__dirname, 'app-resource-sharing/dist'),
-    filename: 'app-resource-sharing.js',
+    path: path.resolve(__dirname, 'dist/app-resource-sharing'),
+    filename: 'app-resource-sharing.min.js',
     library: 'appResourceSharing',
     libraryTarget: 'umd'
   },
+  plugins: [
+    new CopyWebpackPlugin([
+      { from: 'app-resource-sharing/package.json' }
+    ]),
+//    new webpack.optimize.UglifyJsPlugin({
+//      minimize: true,
+//      include: /\.js$/,
+//    })
+  ],
   module: {
     rules: [{
       test: /\.js$/,
@@ -89,7 +105,7 @@ module.exports = [{
 //},{
 //  entry: './plugin-schema-forms/src/index.js',
 //  output: {
-//    path: path.resolve(__dirname, 'plugin-schema-forms/dist'),
+//    path: path.resolve(__dirname, 'dist/plugin-schema-forms'),
 //    filename: 'plugin-schema-forms.js',
 //    library: 'pluginSchemaForm',
 //    libraryTarget: 'umd'

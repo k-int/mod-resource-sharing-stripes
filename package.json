@@ -8,6 +8,10 @@
     "buildmd": "node node_modules/@folio/stripes-core/util/package2md.js --strict app-resource-sharing/package.json > okapi-md.json"
   },
   "dependencies": {
+    "react-jsonschema-form": "^0.51.0",
+    "react-string-replace": "^0.4.1"
+  },
+  "devDependencies": {
     "@folio/checkin": "^1.1.1",
     "@folio/checkout": "^1.1.2",
     "@folio/circulation": "^1.1.1",
@@ -17,19 +21,16 @@
     "@folio/plugin-markdown-better": "^0.2.0",
     "@folio/plugin-markdown-editor": "^0.2.0",
     "@folio/requests": "^1.0.0",
-    "@folio/stripes-components": "1.7.0",
+    "@folio/stripes-components": "^2.0.0",
     "@folio/stripes-connect": "^2.7.0",
-    "@folio/stripes-core": "^2.7.0",
+    "@folio/stripes-core": "~2.8.0",
     "@folio/stripes-logger": "^0.0.2",
     "@folio/trivial": "^1.0.0",
     "@folio/users": "^2.10.1",
-    "react-jsonschema-form": "^0.51.0",
-    "react-string-replace": "^0.4.1"
-  },
-  "devDependencies": {
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "classnames": "^2.2.5",
+    "copy-webpack-plugin": "^4.3.1",
     "webpack": "^3.8.1",
     "webpack-dashboard": "^1.0.0",
     "webpack-dev-server": "^2.9.2"

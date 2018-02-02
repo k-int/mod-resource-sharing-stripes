@@ -4,7 +4,6 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import ResourceSharingRequests from './ResourceSharingRequests';
 import ResourceSharingRequest from './ResourceSharingRequest';
-import 'rxjs/add/operator/delay';
 
 class ResourceSharingRouting extends Component {
 

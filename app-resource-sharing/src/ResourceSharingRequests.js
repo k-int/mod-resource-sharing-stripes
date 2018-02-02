@@ -223,7 +223,7 @@ class ResourceSharingRequests extends Component {
 
   render () {
     
-    const items = this.props.data.requests || [];
+    const items = (this.props.resources.requests || {}).records || [];
     const query = location.search ? queryString.parse(location.search) : {};
     const searchHeader = <FilterPaneSearch id="rs-search"
       onChange={this.searchChange} onClear={this.searchClear} value={this.state.searchTerm} />;
