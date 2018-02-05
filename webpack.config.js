@@ -2,6 +2,7 @@ const path = require('path');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
 /** /
 
@@ -30,6 +31,7 @@ module.exports = [{
     new CopyWebpackPlugin([
       { from: 'app-resource-sharing/package.json' }
     ]),
+    new ExtractTextWebpackPlugin("styles.css"),
 //    new webpack.optimize.UglifyJsPlugin({
 //      minimize: true,
 //      include: /\.js$/,
@@ -44,7 +46,34 @@ module.exports = [{
         options: babelConf,
       },
     },{
+      test: /bootstrap\.css$/,
+      use: [
+        {
+          loader: 'style-loader'
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: function () {
+              return [
+                require('postcss-import'),
+                require('postcss-url'),
+                require("autoprefixer"),
+                require("postcss-custom-properties"),
+                require("postcss-calc"),
+                require("postcss-nesting"),
+                require("postcss-custom-media"),
+                require("postcss-media-minmax"),
+                require("postcss-color-function"),
+                require('postcss-prefixwrap')('.kint')
+              ];
+            }
+          }
+        }
+      ]
+    },{
       test: /\.css$/,
+      exclude: /bootstrap\.css$/,
       use: [
         {
           loader: 'style-loader'

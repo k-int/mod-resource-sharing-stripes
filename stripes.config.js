@@ -8,7 +8,7 @@ module.exports = {
 //     showPerms: true,
 //     listInvisiblePerms: true,
 //     disableAuth: false
-//     hasAllPerms: true,
+     hasAllPerms: true,
 //     softLogout: false
   },
   modules: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
-import { Panel, ButtonGroup } from 'react-bootstrap';
+import { Card, CardHeader, CardBlock, ButtonGroup } from 'reactstrap';
 import Icon from '@folio/stripes-components/lib/Icon';
 import ProtocolRequests from './ProtocolRequests';
 import { get } from 'lodash';
@@ -81,8 +81,10 @@ class ResourceSharingRequest extends React.Component {
           <dt className='col-xs-3' >Article Title:</dt> <dd className='col-xs-9' >{request.titleOfArticle}</dd>
           <dt className='col-xs-3' >Type:</dt> <dd className='col-xs-9' >{request.itemType}</dd>
         </dl>
-        <Panel collapsible={true} defaultExpanded={true} header={panelHeader} >
-          <ProtocolRequests requests={ request.rota } current={ request.currentServiceRequest } />
+        <Card>
+          <CardHeader><h4>Fulfilment Details</h4></CardHeader>
+          <CardBlock>
+            <ProtocolRequests requests={ request.rota } current={ request.currentServiceRequest } />
             {
               rotaStatus == 'IDOL'
             ? 
@@ -94,7 +96,8 @@ class ResourceSharingRequest extends React.Component {
             : 
               null
             }
-        </Panel>
+          </CardBlock>
+        </Card>
       </Pane>
     ):(
      <Pane id="pane-requestDetails" defaultWidth={this.props.paneWidth} paneTitle="Request Details" dismissible onClose={this.props.onClose}>

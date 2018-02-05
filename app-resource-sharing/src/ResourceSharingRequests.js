@@ -233,45 +233,47 @@ class ResourceSharingRequests extends Component {
         render={props => <this.connectedResourceSharingRequest stripes={this.props.stripes} okapi={this.props.okapi} paneWidth="44%" onClose={this.collapseDetails} {...props} />} />
     
     return (
-      <Paneset>
-        {/* Filters */}
-        <SearchFilters 
-          header={searchHeader} defaultWidth="16%" id="rs-pane-filter" filterConfig={ResourceSharingRequests.filterConfig} location={this.props.location} history={this.props.history} />
-        
-        {/* Results Pane */}
-        <Pane
-          defaultWidth="fill"
-          paneTitle={
-            <div style={{ textAlign: 'center' }}>
-              <strong>Administer Resource Sharing Requests</strong>
-              <div>
-                <em>{items.length} Result{items.length == 1 ? '' : 's'} Found</em>
+      <div className="kint" >
+        <Paneset>
+          {/* Filters */}
+          <SearchFilters 
+            header={searchHeader} defaultWidth="16%" id="rs-pane-filter" filterConfig={ResourceSharingRequests.filterConfig} location={this.props.location} history={this.props.history} />
+          
+          {/* Results Pane */}
+          <Pane
+            defaultWidth="fill"
+            paneTitle={
+              <div style={{ textAlign: 'center' }}>
+                <strong>Administer Resource Sharing Requests</strong>
+                <div>
+                  <em>{items.length} Result{items.length == 1 ? '' : 's'} Found</em>
+                </div>
               </div>
-            </div>
-          }
-          lastMenu={<Button id="clickable-rs-create" title="Create a new resource sharing request" onClick={this.onClickCreate} buttonStyle="primary paneHeaderNewButton">Create</Button>}
-        ><MultiColumnList
-            contentData={items}
-            rowMetadata={['id']}
-            visibleColumns={ResourceSharingRequests.visibleFields}
-            fullWidth
-            selectedRow={this.state.selectedItem}
-            formatter={this.state.formatters}
-            onHeaderClick={this.sort}
-            onRowClick={this.selectRow}
-          />
-        </Pane>
-        { detailsPane }
-        <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Create Resource Sharing Request">
-          <CreateForm
-            id="rs-form-create"
-            okapi={this.okapi}
-            onCancel={this.onClickCloseCreate}
-            onSubmit={this.saveRecord}
-            defaultWidth="65%"
-          />
-        </Layer>
-      </Paneset>
+            }
+            lastMenu={<Button id="clickable-rs-create" title="Create a new resource sharing request" onClick={this.onClickCreate} buttonStyle="primary paneHeaderNewButton">Create</Button>}
+          ><MultiColumnList
+              contentData={items}
+              rowMetadata={['id']}
+              visibleColumns={ResourceSharingRequests.visibleFields}
+              fullWidth
+              selectedRow={this.state.selectedItem}
+              formatter={this.state.formatters}
+              onHeaderClick={this.sort}
+              onRowClick={this.selectRow}
+            />
+          </Pane>
+          { detailsPane }
+          <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Create Resource Sharing Request">
+            <CreateForm
+              id="rs-form-create"
+              okapi={this.okapi}
+              onCancel={this.onClickCloseCreate}
+              onSubmit={this.saveRecord}
+              defaultWidth="65%"
+            />
+          </Layer>
+        </Paneset>
+      </div>
     );
   }
 }

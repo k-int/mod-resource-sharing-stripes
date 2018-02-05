@@ -1,15 +1,20 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import { Table } from 'reactstrap';
 import { get } from 'lodash';
 import classnames from 'classnames';
 
 
-const ProtocolRequest = ({request, rowClasses}) => {
+const ProtocolRequest = ({request, rowClasses, rotaSequence, index}) => {
   let status = get(request, 'currentState.code');
-  let classes = Object.assign ({}, rowClasses, {
-    'danger': (status === 'NOT SUPPLIED'),
-    'success': (status === 'SHIPPED')
-  });
+  let future = index > (rotaSequence - 1);
+  let current = (rotaSequence - 1) == index;
+  let succeeded = (status === 'SHIPPED');
+  let classes = {
+    'table-danger': (status === 'NOT SUPPLIED'),
+    'table-success': (succeeded),
+    'table-active': (!succeeded && current),
+    'text-muted': (future)
+  };
   
   return (
     <tr className={ classnames(classes) } >
@@ -36,7 +41,7 @@ const ProtocolRequests = ({requests, current}) => {
       </thead>
       <tbody>
         { requests.map((req, index) => ( 
-           <ProtocolRequest key={index} request={req} rowClasses={{ 'active': ((rotaSequence - 1) == index), 'text-muted': (index > (rotaSequence - 1)) }} /> )) }
+           <ProtocolRequest key={index} index={index} request={req} rotaSequence={rotaSequence} /> )) }
       </tbody>
     </Table>
   )
