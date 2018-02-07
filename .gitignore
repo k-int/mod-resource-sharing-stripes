@@ -6,3 +6,5 @@ stripes.config.js.local
 !.gitignore
 !.tern-project
 !.eslintrc.json
+!.npmrc
+!.yarnclean
