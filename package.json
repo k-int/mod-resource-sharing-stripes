@@ -1,29 +1,17 @@
 {
   "license": "Apache-2.0",
   "scripts": {
-    "build": "stripes build stripes.config.js",
-    "start": "stripes dev stripes.config.js",
-    "local": "f=stripes.config.js; test -f $f.local && f=$f.local; echo Using config $f; stripes dev $f",
+    "build": "./node_modules/@k-int/stripes-baseline/baseline-stripes.js build stripes.config.js",
+    "start": "./node_modules/@k-int/stripes-baseline/baseline-stripes.js dev stripes.config.js",
+    "local": "f=stripes.config.js; test -f $f.local && f=$f.local; echo Using config $f; ./node_modules/@k-int/stripes-baseline/baseline-stripes.js dev $f",
     "postinstall": "./postinstall.sh",
     "buildmd": "node node_modules/@folio/stripes-core/util/package2md.js --strict app-resource-sharing/package.json > okapi-md.json"
   },
-  "dependencies": {},
+  "publishConfig": {
+    "registry": "http://npm.k-int.com"
+  },
   "devDependencies": {
-    "@folio/checkin": "^1.1.1",
-    "@folio/checkout": "^1.1.2",
-    "@folio/circulation": "^1.1.1",
-    "@folio/developer": "^1.3.0",
-    "@folio/items": "^1.11.0",
-    "@folio/plugin-find-user": "^1.1.0",
-    "@folio/plugin-markdown-better": "^0.2.0",
-    "@folio/plugin-markdown-editor": "^0.2.0",
-    "@folio/requests": "^1.0.0",
-    "@folio/stripes-components": "^2.0.0",
-    "@folio/stripes-connect": "^2.7.0",
-    "@folio/stripes-core": "~2.8.0",
-    "@folio/stripes-logger": "^0.0.2",
-    "@folio/trivial": "^1.0.0",
-    "@folio/users": "^2.10.1",
+    "@k-int/stripes-baseline": "1.0.0-alpha",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "bootstrap": "^4.0.0",
