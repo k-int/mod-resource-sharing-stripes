@@ -1,5 +1,5 @@
 {
-  "name": "@folio/resource-sharing",
+  "name": "@k-int/resource-sharing",
   "version": "0.0.1",
   "description": "Stripes app module for resource sharing",
   "main": "app-resource-sharing.min.js",

@@ -4,7 +4,6 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import ResourceSharingRequests from './ResourceSharingRequests';
 import ResourceSharingRequest from './ResourceSharingRequest';
-import 'bootstrap/dist/css/bootstrap.css';
 class ResourceSharingRouting extends Component {
 
   static propTypes = {

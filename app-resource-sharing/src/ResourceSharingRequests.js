@@ -16,6 +16,7 @@ import stringReplace from 'react-string-replace';
 import ResourceSharingRequest from './ResourceSharingRequest';
 import Route from 'react-router-dom/Route';
 import { get } from 'lodash';
+import 'bootstrap/dist/css/bootstrap.css';
 
 class ResourceSharingRequests extends Component {
   

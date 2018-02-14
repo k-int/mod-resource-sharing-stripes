@@ -11,7 +11,7 @@
     "registry": "http://npm.k-int.com"
   },
   "devDependencies": {
-    "@k-int/stripes-baseline": "1.0.0-alpha",
+    "@k-int/stripes-baseline": "1.0.0-alpha3",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "bootstrap": "^4.0.0",

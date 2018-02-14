@@ -31,7 +31,7 @@ module.exports = [{
     new CopyWebpackPlugin([
       { from: 'app-resource-sharing/package.json' }
     ]),
-    new ExtractTextWebpackPlugin("styles.css"),
+//    new ExtractTextWebpackPlugin('resourcesharing.css'),
 //    new webpack.optimize.UglifyJsPlugin({
 //      minimize: true,
 //      include: /\.js$/,
@@ -50,6 +50,9 @@ module.exports = [{
       use: [
         {
           loader: 'style-loader'
+        },
+        {
+          loader: 'css-loader'
         },
         {
           loader: 'postcss-loader',
