@@ -1,7 +1,7 @@
 {
   "license": "Apache-2.0",
   "scripts": {
-    "build": "./node_modules/@k-int/stripes-baseline/baseline-stripes.js build stripes.config.js",
+    "build": "./node_modules/webpack/bin/webpack.js",
     "start": "./node_modules/@k-int/stripes-baseline/baseline-stripes.js dev stripes.config.js",
     "local": "f=stripes.config.js; test -f $f.local && f=$f.local; echo Using config $f; ./node_modules/@k-int/stripes-baseline/baseline-stripes.js dev $f",
     "postinstall": "./postinstall.sh",
