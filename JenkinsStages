@@ -7,7 +7,7 @@ stage ('Build the module') {
 }
 
 stage ('Publish to NPM') {
-  dir ('app-resource-sharing') {
+  dir ('dist/app-resource-sharing') {
     sh '''
       npm publish
     '''
